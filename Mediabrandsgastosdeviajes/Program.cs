@@ -1,10 +1,18 @@
+using Mediabrandsgastosdeviajes.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Configurar servicios
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<ViajesgastosContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));
+
+// Configurar cadena de conexión
+builder.Configuration.AddJsonFile("appsettings.json");
+builder.Configuration.AddEnvironmentVariables();
 
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
