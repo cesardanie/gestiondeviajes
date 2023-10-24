@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Bienvenido</h1>
+    <!-- Botón para Viajero con evento JavaScript -->
+    <button class="btn btn-primary" id="btnViajero">Viajero</button>
+
+    <!-- Botón para Viajero con evento JavaScript -->
+    <button class="btn btn-primary" id="btnAprobador">Aprobador Viajero</button>
+</div>
+
+<script>
+    // Agregar un evento click al botón
+    document.getElementById("btnViajero").addEventListener("click", function () {
+        // Redireccionar a la dirección deseada
+        window.location.href = "https://localhost:7196/Viajero/Viajero";
+    });
+    // Agregar un evento click al botón
+    document.getElementById("btnAprobador").addEventListener("click", function () {
+        // Redireccionar a la dirección deseada
+        window.location.href = "https://localhost:7196/Viajero/Aprobador";
+    });
+</script>

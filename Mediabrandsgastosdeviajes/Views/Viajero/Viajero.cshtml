@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Viajero";
+}
+
+<div>
+    <h1>Formulario de Gastos de Viaje</h1>
+    <form action="/Viajero/ProcesarGastos" method="post">
+        <div class="form-group">
+            <label for="responsable">Quién asumirá los gastos del viaje:</label>
+            <select class="form-control" id="responsable" name="responsable">
+                <option value="Agencia">Agencia</option>
+                <option value="Cliente">Cliente</option>
+            </select>
+        </div>
+
+        <div class "form-group">
+            <label for="unidad">Unidad de la compañía:</label>
+            <select class="form-control" id="unidad" name="unidad">
+                <option value="BPN">BPN</option>
+                <option value="INI">INI</option>
+                <option value="UM">UM</option>
+                <option value="OTRA">OTRA</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="fecha">Fecha:</label>
+            <input type="date" class="form-control" id="fecha" name="fecha">
+        </div>
+
+        <div class="form-group">
+            <label for="descripcion">Descripción:</label>
+            <input type="text" class="form-control" id="descripcion" name="descripcion">
+        </div>
+
+        <div class="form-group">
+            <label for="proveedor">Proveedor:</label>
+            <input type="text" class="form-control" id="proveedor" name="proveedor">
+        </div>
+
+        <div class="form-group">
+            <label for="alimentacion">Alimentación:</label>
+            <input type="text" class="form-control" id="alimentacion" name="alimentacion" oninput="calcularTotalGastos()" placeholder="Ingrese el valor (ejemplo: 2,000,000)">
+        </div>
+
+        <div class="form-group">
+            <label for="transportes">Transportes:</label>
+            <input type="text" class="form-control" id="transportes" name="transportes" oninput="calcularTotalGastos()" placeholder="Ingrese el valor (ejemplo: 2,000,000)">
+        </div>
+
+        <div class="form-group">
+            <label for="hotel">Hotel:</label>
+            <input type="text" class="form-control" id="hotel" name="hotel" oninput="calcularTotalGastos()" placeholder="Ingrese el valor (ejemplo: 2,000,000)">
+        </div>
+
+        <div class="form-group">
+            <label for="otros">Otros:</label>
+            <input type="text" class="form-control" id="otros" name="otros" oninput="calcularTotalGastos()" placeholder="Ingrese el valor (ejemplo: 2,000,000)">
+        </div>
+
+        <div class="form-group">
+            <label for="nombreCliente">Nombre del Cliente:</label>
+            <input type="text" class="form-control" id="nombreCliente" name="nombreCliente">
+        </div>
+
+        <div class="form-group">
+            <label for="totalGastos">Total de Gastos:</label>
+            <input type="text" class="form-control" id="TotalGastos" name="TotalGastos" readonly>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+</div>
+
+<script>
+    function calcularTotalGastos() {
+        var alimentacion = parseFloat(document.getElementById("alimentacion").value.replace(/,/g, "").replace(/\./g, "")) || 0;
+        var transportes = parseFloat(document.getElementById("transportes").value.replace(/,/g, "").replace(/\./g, "")) || 0;
+        var hotel = parseFloat(document.getElementById("hotel").value.replace(/,/g, "").replace(/\./g, "")) || 0;
+        var otros = parseFloat(document.getElementById("otros").value.replace(/,/g, "").replace(/\./g, "")) || 0;
+        var totalGastos = alimentacion + transportes + hotel + otros;
+        console.log(alimentacion, transportes, totalGastos);
+        document.getElementById("TotalGastos").value = numberWithCommas(totalGastos.toFixed(3));
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+</script>
