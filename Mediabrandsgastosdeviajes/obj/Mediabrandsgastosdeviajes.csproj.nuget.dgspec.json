@@ -44,6 +44,18 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "DinkToPdf": {
+              "target": "Package",
+              "version": "[1.0.8, )"
+            },
+            "DocX": {
+              "target": "Package",
+              "version": "[3.0.23523.1209, )"
+            },
+            "EPPlus": {
+              "target": "Package",
+              "version": "[6.2.10, )"
+            },
             "EntityFramework": {
               "target": "Package",
               "version": "[6.4.4, )"
@@ -57,6 +69,14 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.13, )"
+            },
+            "NPOI": {
+              "target": "Package",
+              "version": "[2.6.2, )"
+            },
+            "iTextSharp": {
+              "target": "Package",
+              "version": "[5.5.13.3, )"
             }
           },
           "imports": [

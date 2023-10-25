@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mediabrandsgastosdeviajes.Models;
 
 public partial class Viajero
 {
+    [Key]
     public long Id { get; set; }
 
     public string Agencia { get; set; } = null!;

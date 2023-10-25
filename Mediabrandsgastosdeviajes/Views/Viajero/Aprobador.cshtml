@@ -1,5 +1,125 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    var viajeros = ViewBag.Viajeros as List<Mediabrandsgastosdeviajes.Models.Viajero>;
+    var presupuestos = ViewBag.Presupuestos as List<Mediabrandsgastosdeviajes.Models.Presupuesto>;
 }
+
+
+<h1>Tabla de Viajeros</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Responsable</th>
+            <th>Unidad</th>
+            <th>Fecha</th>
+            <th>Descripcion</th>
+            <th>Proveedor</th>
+            <th>Alimentacion</th>
+            <th>Transportes</th>
+            <th>Hotel</th>
+            <th>Otros</th>
+            <th>NombreCliente</th>
+            <th>TotalGastos</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var viajero in Model)
+        {
+            <tr>
+                <td>@viajero.Agencia</td>
+                <td>@viajero.Unidad</td>
+                <td>@viajero.Fecha</td>
+                <td>@viajero.Descripcion</td>
+                <td>@viajero.Proveedor</td>
+                <td>@viajero.Alimentacion</td>
+                <td>@viajero.Transportes</td>
+                <td>@viajero.Hotel</td>
+                <td>@viajero.Otros</td>
+                <td>@viajero.NombreCliente</td>
+                <td>@viajero.TotalGastos</td>
+                <td>@viajero.Estado</td>
+                <td>
+                    <button class="btn btn-success" onclick="aceptar(@viajero.Id)">Aceptar</button>
+                    <br />
+                    <button class="btn btn-danger" onclick="rechazar(@viajero.Id)">Rechazar</button>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Presupuesto</th>
+            <th>Saldo</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var presupuesto in presupuestos)
+        {
+            <tr>
+                <td>@presupuesto.PresupuestoGeneral</td>
+                <td>@presupuesto.Saldo</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-controller="Viajero" asp-action="ExportToExcel" class="btn btn-primary">Exportar a Excel</a>
+<a asp-controller="Viajero" asp-action="GenerateWordDocument" class="btn btn-primary">Descargar Word</a>
+<a asp-controller="Viajero" asp-action="GenerarPDF" class="btn btn-primary">Descargar pdf</a>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+@section scripts {
+    <script>
+
+        document.getElementById("btnDescargarPdf").addEventListener("click", function () {
+            // Código para crear el PDF a partir de los datos
+            var doc = new jsPDF();
+
+            // Agrega contenido al PDF
+            doc.text("Título del PDF", 10, 10);
+            doc.text("Datos a incluir en el PDF", 10, 20);
+
+            // Descargar el PDF
+            doc.save("reporte.pdf");
+        });
+        function aceptar(id) {
+            $.ajax({
+                url: '/Viajero/Aceptar', // Reemplaza 'Viajero' con la URL de tu controlador
+                type: 'POST',
+                data: { id: id },
+                success: function (response) {
+                    // Procesa la respuesta del servidor
+                    window.location.reload();
+                },
+                error: function () {
+                    alert("Error al aceptar");
+                }
+            });
+        }
+
+        function rechazar(id) {
+            $.ajax({
+                url: '/Viajero/Rechazar', // Reemplaza 'Viajero' con la URL de tu controlador
+                type: 'POST',
+                data: { id: id },
+                success: function (response) {
+                    // Procesa la respuesta del servidor
+                    alert("Rechazado: " + response);
+                },
+                error: function () {
+                    alert("Error al rechazar");
+                }
+            });
+        }
+    </script>
+}
+
